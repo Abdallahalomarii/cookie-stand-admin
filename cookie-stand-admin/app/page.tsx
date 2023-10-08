@@ -1,8 +1,11 @@
 // import Image from 'next/image'
-import Index from './pages/Index'
+import CookieStandAdmin from './pages/page'
 
 export default function Home() {
   return (
-  <Index></Index>
+    <>
+  <CookieStandAdmin></CookieStandAdmin>
+  </>
   )
+  
 }
