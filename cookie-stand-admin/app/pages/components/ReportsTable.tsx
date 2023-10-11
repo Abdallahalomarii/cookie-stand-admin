@@ -1,21 +1,39 @@
-export default function ReportsTable({ formDataList }) {
-
-  const calculateRowSum = (row) => {
-    return row.hourly_sales.reduce((acc, item) => acc + item, 0);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+export default function ReportsTable(TableDataList:any) {
+  
+  const data = TableDataList.TableDataList;
+  
+  const calculateRowSum = (row:any) => {
+    return row.hourlySales.reduce((acc: any, item: any) => acc + item, 0);
   };
 
-  const calculateColumnSum = (formDataList, columnIndex) => {
-    return formDataList.reduce((acc, row) => acc + row.hourly_sales[columnIndex], 0);
+  const calculateColumnSum = (formDataList: any[], columnIndex: number) => {
+    return formDataList.reduce((acc, row) => acc + row.hourlySales[columnIndex], 0);
   };
 
-  const totalSum = formDataList.reduce((acc, row) => acc + calculateRowSum(row), 0);
+  const totalSum = data.reduce((acc: any, row: any) => acc + calculateRowSum(row), 0);
   const columnSums = Array.from({ length: 14 }, (_, columnIndex) =>
-    calculateColumnSum(formDataList, columnIndex)
+    calculateColumnSum(data, columnIndex)
   );
+
+  const HandleDeleteCookie = async (cookie:any) => {
+    
+    try{
+      await axios.delete(`https://cookiesalmonapi.azurewebsites.net/api/CookieStand/${cookie}`);
+    }
+    catch(error){
+      alert(`Error while trying to delete cookie with this id ${cookie} 
+      the error : ${error}`);
+    }
+    
+    
+  }
   
   return (
     <div className="mt-4rounded p-5 text-white">
-      {formDataList.length > 0 ? (
+      {data.length > 0 ? (
         <div className="py-3 w-full max-w-screen-xl mx-auto">
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <table className="min-w-full bg-white">
@@ -72,14 +90,14 @@ export default function ReportsTable({ formDataList }) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 text-black">
-                {formDataList.map((data, index) => (
+              {data.map((item:any, index:any) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">{data.location}</td>
-                    {data.hourly_sales.map((clock, subIndex) => (
+                    <td className="px-6 py-4 whitespace-nowrap">{item.location} <FontAwesomeIcon icon={faTrash} style={{color:'#aa0000'}}  onClick={()=>{HandleDeleteCookie(item.id)}}/> </td>
+                    {item.hourlySales.map((clock:any, subIndex:any) => (
                       <td key={subIndex} className="px-6 py-4 whitespace-nowrap">{clock}</td>
                     ))}
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {calculateRowSum(data)}
+                      {calculateRowSum(item)}
                     </td>
                   </tr>
                 ))}
@@ -97,7 +115,7 @@ export default function ReportsTable({ formDataList }) {
           </div>
         </div>
       ) : (
-        <div>No Cookies Avialabe right now</div>
+        <div>No Cookies Avialabe right now from Report  Table </div>
       )}
     </div>
   );

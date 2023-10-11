@@ -1,19 +1,21 @@
+// import Link from "next/link";
+// import useSWR from "swr";
+'use client';
 import Link from "next/link";
+import { useState } from "react";
+import useSWR from "swr";
 
-interface CookieStand {
-  id: number;
-  location: string;
-  description: string;
-  hourlySales: number[];
-  minimum_Customers_Per_Hour: number;
-  maximum_Customers_Per_Hour: number;
-  average_Cookies_Per_Sale: number;
-  owner: string | null;
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
-}
-export default async function GetData() {
-  const res = await fetch('https://cookiesalmonapi.azurewebsites.net/api/CookieStand');
-  const data: CookieStand[] = await res.json();
+export default function GetData() {
+  
+  const [cookieStands, setCookieStands] = useState([]);
+  const { data, error } = useSWR('https://cookiesalmonapi.azurewebsites.net/api/CookieStand', fetcher);
+
+  if (error) return <div>Error fetching data.</div>;
+  if (!data) return <div>Loading...</div>;
+
+  
 
   const calculateRowSum = (row:any) => {
     return row.hourlySales.reduce((acc: any, item: any) => acc + item, 0);
@@ -127,10 +129,10 @@ export default async function GetData() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 text-black">
-                {data.map((item, index) => (
+                {data.map((item:any, index:any) => (
                   <tr key={index}>
                     <td className="px-6 py-4 whitespace-nowrap">{item.location}</td>
-                    {item.hourlySales.map((clock, subIndex) => (
+                    {item.hourlySales.map((clock:any, subIndex:any) => (
                       <td key={subIndex} className="px-6 py-4 whitespace-nowrap">{clock}</td>
                     ))}
                     <td className="px-6 py-4 whitespace-nowrap">
