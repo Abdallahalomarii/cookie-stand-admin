@@ -6,7 +6,9 @@ function Header(){
                 Cookie Stand Admin!
             </div>
             <div className='text-green-800 text-xl px-5 mx-auto'>
-              <Link href="./pages/api">Overview</Link>
+              <Link href="/pages/components">Overview</Link>
+              <Link href="/pages">Login</Link>
+              
             </div>
         </div>
     );

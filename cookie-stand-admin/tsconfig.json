@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/pages/Header.tsx", "app/pages/Main.jsx", "app/pages/GetData.jsx", "app/pages/api/page.tsx", "app/pages/CreateForm.jsx", "app/pages/page.jsx", "app/page.jsx", "app/pages/ReportsTable.jsx", "app/pages/CreateForm.jsx", "app/pages/Footer.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/pages/components/Header.tsx", "app/pages/components/Main.jsx", "app/pages/components/GetData.jsx", "app/pages/api/page.tsx", "app/pages/components/CreateForm.jsx", "app/pages/components/page.jsx", "app/page.jsx", "app/pages/components/ReportsTable.tsx", "app/pages/components/CreateForm.jsx", "app/pages/components/Footer.jsx", "app/pages/register/page.jsx"],
   "exclude": ["node_modules"]
 }
